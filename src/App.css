@@ -1,38 +1,80 @@
+:root {
+  --def-transition-duration: 0.3s;
+}
+
 .App {
-  text-align: center;
+  position: absolute;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+header {
+  border-bottom: 1px solid white;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+header figure img {
+  width: 10rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+main {
+  display: flex;
+  flex-direction: column;
+  margin: 4rem 32rem 0rem 32rem;
+  gap: 6rem;
+}
+
+main div {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  text-align: center;
+}
+
+main div h1 {
+  font-size: 3rem;
+}
+
+main div button {
+  display: flex;
+  width: max-content;
+  border-radius: 2rem;
+  padding: 0 2rem;
+
+  border: 1px solid black;
+  color: black;
+  background-color: white;
+  gap: 2rem;
+  transition-property: background-color, color;
+}
+
+main div button h4 {
+  font-size: medium;
+}
+
+main div button:hover h4 {
+  font-size: large;
+  transition-property: font-size;
+}
+
+main div button img {
+  margin: auto;
+  width: 1.5rem;
+  filter: invert(0%);
+  transform: rotate(0) translate3d(0, 0, 0);
+  transition-property: transform, invert;
+}
+
+main div button:hover {
+  background-color: gray;
+  cursor: pointer;
   color: white;
 }
-
-.App-link {
-  color: #61dafb;
+main div button:hover img {
+  transform: rotate(180deg) translate3d(1rem, 0, 0);
+  filter: invert(100%);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+main div button,
+main div button img,
+main div button h4 {
+  transition-duration: var(--def-transition-duration);
+  transition-timing-function: ease-in-out;
 }
