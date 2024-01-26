@@ -5,10 +5,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  const Server_URL = process.env.REACT_APP_SERVER_URL;
   const [Field, SetField] = useState({ name: "", email: "", otp: "" });
   const [OtpCheck, SetOtpCheck] = useState({ status: false, value: "" });
   const [Verified, SetVerified] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   //   console.log(Field);
   const OnFieldChangeHandler = (event) => {
     const { name, value } = event.target;
@@ -20,32 +21,26 @@ const Signup = () => {
   const OnFormSubmitHandler = async (event) => {
     event.preventDefault();
     if (OtpCheck.status === false) {
-      const response = await axios.post(
-        "http://localhost:4000/api/user/sendotp",
-        {
-          email: Field.email,
-        }
-      );
+      const response = await axios.post(Server_URL + "user/sendotp", {
+        email: Field.email,
+      });
 
       if (response.status === 200) {
         SetOtpCheck({ status: true, value: response.data.otp });
       }
     } else {
-      const response = await axios.post(
-        "http://localhost:4000/api/user/signup",
-        {
-          ...Field,
-        }
-      );
+      const response = await axios.post(Server_URL + "user/signup", {
+        ...Field,
+      });
 
       if (response.status === 200) {
         SetVerified(true);
       }
     }
   };
-   const onClickHandler = (event) => {
-     navigate("/posts?option=1");
-   };
+  const onClickHandler = (event) => {
+    navigate("/posts?option=1");
+  };
 
   return (
     <div id="signup">

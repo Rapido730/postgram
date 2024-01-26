@@ -9,8 +9,9 @@ import { useNavigate } from "react-router-dom";
 import { render } from "react-dom";
 
 const Login = () => {
+  const Server_URL = process.env.REACT_APP_SERVER_URL;
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [Field, SetField] = useState({ email: "", otp: "" });
   const [OtpCheck, SetOtpCheck] = useState({ status: false, value: "" });
   const [Verified, SetVerified] = useState(false);
@@ -25,23 +26,17 @@ const Login = () => {
   const OnFormSubmitHandler = async (event) => {
     event.preventDefault();
     if (OtpCheck.status === false) {
-      const response = await axios.post(
-        "http://localhost:4000/api/user/sendotp",
-        {
-          email: Field.email,
-        }
-      );
+      const response = await axios.post(Server_URL + "user/sendotp", {
+        email: Field.email,
+      });
 
       if (response.status === 200) {
         SetOtpCheck({ status: true, value: response.data.otp });
       }
     } else {
-      const response = await axios.post(
-        "http://localhost:4000/api/user/login",
-        {
-          ...Field,
-        }
-      );
+      const response = await axios.post(Server_URL + "user/login", {
+        ...Field,
+      });
 
       if (response.status === 200) {
         SetVerified(true);
@@ -54,7 +49,7 @@ const Login = () => {
   };
 
   const onClickHandler = (event) => {
-    navigate("/posts")
+    navigate("/posts");
   };
 
   return (

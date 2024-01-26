@@ -4,9 +4,8 @@
 
 .App {
   position: absolute;
-  min-height: 100svh;
-  min-width: 100svw;
-  width: fit-content;
+  min-height: 100%;
+  min-width: 100%;
   height: fit-content;
 }
 
@@ -307,6 +306,7 @@
   flex-direction: column;
   gap: 2rem;
   padding: 2em 2em 4em 2em;
+  height: fit-content;
 }
 
 #options button {
