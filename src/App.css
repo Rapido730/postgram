@@ -520,7 +520,7 @@
   margin: 1rem;
   background-color: #55555529;
   border-radius: 0.5rem;
-
+  max-width: 45rem;
   font-weight: 500;
   padding: 0.5rem 1rem;
   color: #707070;
