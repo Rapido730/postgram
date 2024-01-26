@@ -4,8 +4,8 @@
 
 .App {
   position: absolute;
-  min-height: 100dvh;
-  min-width: 100dvw;
+  min-height: 100svh;
+  min-width: 100svw;
   width: fit-content;
   height: fit-content;
 }
