@@ -4,35 +4,64 @@
 
 .App {
   position: absolute;
+  min-height: 100dvh;
+  min-width: 100dvw;
+  width: fit-content;
+  height: fit-content;
 }
 
-header {
+#Navigation {
   border-bottom: 1px solid white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2em;
 }
 
-header figure img {
+#Navigation h3 {
+  font-weight: 800;
+  cursor: pointer;
+}
+#Navigation figure img {
+  cursor: pointer;
   width: 10rem;
+  filter: brightness(1.5);
+  transform: scale(1);
+  transition-property: filter, transform;
 }
-
-main {
+#Navigation figure img:hover {
+  filter: brightness(10);
+  transform: scale(1.05);
+}
+#homepage {
   display: flex;
   flex-direction: column;
   margin: 4rem 32rem 0rem 32rem;
   gap: 6rem;
 }
 
-main div {
+#homepage div {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
 }
 
-main div h1 {
+#homepage div h1 {
   font-size: 3rem;
 }
+#homepage div h3 {
+  display: flex;
+  gap: 1em;
+}
 
-main div button {
+#homepage div h3 img {
+  /* content: url("../public/rocket-solid.svg"); */
+  width: 1em;
+  filter: invert(100%);
+}
+
+#homepage div button {
   display: flex;
   width: max-content;
   border-radius: 2rem;
@@ -45,16 +74,16 @@ main div button {
   transition-property: background-color, color;
 }
 
-main div button h4 {
+#homepage div button h4 {
   font-size: medium;
 }
 
-main div button:hover h4 {
+#homepage div button:hover h4 {
   font-size: large;
   transition-property: font-size;
 }
 
-main div button img {
+#homepage div button img {
   margin: auto;
   width: 1.5rem;
   filter: invert(0%);
@@ -62,19 +91,514 @@ main div button img {
   transition-property: transform, invert;
 }
 
-main div button:hover {
+#homepage div button:hover {
   background-color: gray;
   cursor: pointer;
   color: white;
 }
-main div button:hover img {
+#homepage div button:hover img {
   transform: rotate(180deg) translate3d(1rem, 0, 0);
   filter: invert(100%);
 }
 
-main div button,
-main div button img,
-main div button h4 {
+#homepage div button,
+#homepage div button img,
+#homepage div button h4 {
+  transition-duration: var(--def-transition-duration);
+  transition-timing-function: ease-in-out;
+}
+
+#signup {
+  display: flex;
+  justify-content: center;
+}
+
+#signup form {
+  overflow: hidden;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 25dvw;
+  min-height: 25dvh;
+  border-radius: 1rem;
+  padding: 3rem 1rem;
+  margin: 8rem 1rem 0 1rem;
+  background-color: rgb(35, 34, 34);
+  gap: 1rem;
+  align-items: center;
+}
+
+#signup form img {
+  width: 2rem;
+  filter: invert(100%);
+  transform: translate3d(0, 0, 0);
+  transition-property: transform;
+}
+
+#signup form h3 {
+  font-weight: 700;
+}
+
+#signup form h4 {
+  text-align: center;
+}
+
+#signup form img:hover {
+  transform: translate3d(2rem, -2rem, 0);
+}
+
+#signup form input {
+  width: 70%;
+  padding: 1rem 2rem;
+  border-radius: 2rem;
+  background-color: black;
+  border: 2px solid white;
+  color: white;
+}
+
+#signup form input::placeholder {
+  font-weight: bold;
+  color: white;
+}
+
+#signup form button {
+  display: flex;
+  width: 90%;
+  border-radius: 2rem;
+  padding: 0 2rem;
+  justify-content: center;
+  border: 1px solid black;
+  color: white;
+  background-color: black;
+  gap: 1rem;
+  transition-property: background-color, color;
+}
+
+#signup form button h4 {
+  font-size: medium;
+}
+
+#signup form button:hover h4 {
+  font-size: large;
+  transition-property: font-size;
+}
+
+#signup form button img {
+  margin: auto 0;
+  width: 1.5rem;
+  filter: invert(100%);
+  transform: rotate(0) translate3d(0, 0, 0);
+  transition-property: transform, invert;
+}
+
+#signup form button:hover {
+  background-color: gray;
+  cursor: pointer;
+  color: white;
+}
+#signup form button:hover img {
+  transform: rotate(180deg) translate3d(-1rem, 0, 0);
+  filter: invert(0%);
+}
+#signup div {
+  overflow: hidden;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  width: 50vb;
+  height: 30vh;
+  border-radius: 1rem;
+  padding: 3rem 1rem;
+  margin: 8rem 1rem 0 1rem;
+  background-color: rgb(35, 34, 34);
+  gap: 1rem;
+  align-items: center;
+}
+
+#signup div img {
+  width: 3rem;
+  filter: invert(100%);
+  transform: translate3d(0, 0, 0);
+  transition-property: transform;
+}
+
+#signup div h3 {
+  font-weight: 700;
+  text-align: justify;
+}
+
+#signup div h4 {
+  text-align: center;
+}
+
+#signup div img:hover {
+  transform: translate3d(2rem, -2rem, 0);
+}
+
+#signup div input {
+  width: 70%;
+  padding: 1rem 2rem;
+  border-radius: 2rem;
+  background-color: black;
+  border: 2px solid white;
+  color: white;
+}
+
+#signup div input::placeholder {
+  font-weight: bold;
+  color: white;
+}
+
+#signup div button {
+  display: flex;
+  width: 90%;
+  border-radius: 2rem;
+  padding: 0 2rem;
+  justify-content: center;
+  border: 1px solid black;
+  color: white;
+  background-color: black;
+  gap: 1rem;
+  transition-property: background-color, color;
+}
+
+#signup div button h4 {
+  font-size: medium;
+}
+
+#signup div button:hover h4 {
+  font-size: large;
+  transition-property: font-size;
+}
+
+#signup div button img {
+  margin: auto 0;
+  width: 1.5rem;
+  filter: invert(100%);
+  transform: rotate(0) translate3d(0, 0, 0);
+  transition-property: transform, invert;
+}
+
+#signup div button:hover {
+  background-color: gray;
+  cursor: pointer;
+  color: white;
+}
+#signup div button:hover img {
+  transform: rotate(180deg) translate3d(-1rem, 0, 0);
+  filter: invert(0%);
+}
+
+#signup-link,
+#signin-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+#post-page {
+  display: flex;
+  margin: 6em auto;
+  gap: 2rem;
+  justify-content: center;
+}
+
+#options {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2em 2em 4em 2em;
+}
+
+#options button {
+  background-color: rgb(21, 20, 20);
+  border-radius: 0.5rem;
+  border: none;
+  padding: 1rem 6rem 1rem 2rem;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+  transition-property: background-color;
+}
+
+#options button:hover {
+  background-color: gray;
+}
+
+#options #create-post-btn {
+  border: 1px solid rgba(128, 128, 128, 0.422);
+  background: black;
+  font-size: 1.25rem;
+  position: relative;
+  margin: auto;
+  transition-property: border;
+}
+
+#options #create-post-btn::before {
+  content: url("../public/plus-circle.svg");
+  position: relative;
+  top: 15%;
+  right: 5%;
+}
+
+#options #create-post-btn:hover {
+  border: 1px solid rgba(128, 128, 128, 0.707);
+}
+
+#workplace {
+  background-color: rgb(17, 17, 17);
+  border-radius: 1em;
+  min-width: 40em;
+  min-height: 16em;
+}
+
+#post-list {
+  width: 50em;
+  height: 60dvh;
+  padding: 0.2rem 0.5rem 0rem 1rem;
+  /* padding-left:1em; */
+}
+
+#post-list ul {
+  list-style: none;
+  height: 80%;
+  padding: 0em 1em;
+  overflow-y: auto;
+  /* background-color: azure;   */
+}
+
+#post-link {
+  color: #989797;
+  text-decoration: none;
+}
+
+#workplace ul::-webkit-scrollbar {
+  width: 12px; /* Set the width of the scrollbar */
+  cursor: pointer;
+  z-index: 2;
+}
+
+#workplace ul::-webkit-scrollbar-thumb {
+  background-color: #888; /* Set the color of the scrollbar thumb */
+  border-radius: 6px; /* Optional: Set border-radius to round the scrollbar thumb */
+  cursor: pointer;
+}
+
+#workplace ul::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Set the color of the scrollbar track */
+  border-radius: 12px;
+  background: rgba(49, 49, 49, 0.536);
+  cursor: pointer;
+}
+
+/* Optional: Handle when the user hovers over the scrollbar */
+#workplace ul::-webkit-scrollbar-thumb:hover,
+#body::-webkit-scrollbar-thumb:focus {
+  background-color: #555;
+  cursor: pointer;
+}
+
+#workplace ul li {
+  padding: 0.5rem 2rem;
+  /* margin:0rem 1rem; */
+  margin-bottom: 1em;
+  background-color: rgba(52, 51, 51, 0.566);
+  border-radius: 0.5em;
+  color: rgba(255, 255, 255, 0.711);
+  cursor: pointer;
+  transition-property: color, background-color;
+}
+
+#workplace ul li:hover {
+  background-color: rgba(52, 51, 51, 0.07);
+  color: rgb(255, 255, 255);
+}
+
+#create-post {
+  width: 50em;
+  padding: 0.2rem 0.5rem 1rem 1rem;
+}
+
+#create-post form {
+  padding: 0rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+#create-post form input,
+#body {
+  padding: 1rem;
+  background: rgba(49, 49, 49, 0.536);
+  border: none;
+  border-radius: 0.5rem;
+  width: 95%;
+  color: white;
+  font-weight: bold;
+  font-size: medium;
+  outline: none;
+}
+
+#body {
+  height: fit-content;
+  min-height: 6rem;
+  resize: none;
+}
+
+#body:focus {
+  /* outline:none; */
+}
+
+#body::-webkit-scrollbar {
+  width: 12px; /* Set the width of the scrollbar */
+  cursor: pointer;
+  z-index: 2;
+}
+
+#body::-webkit-scrollbar-thumb {
+  background-color: #888; /* Set the color of the scrollbar thumb */
+  border-radius: 6px; /* Optional: Set border-radius to round the scrollbar thumb */
+  cursor: pointer;
+}
+
+#body::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Set the color of the scrollbar track */
+  border-radius: 12px;
+  background: rgba(49, 49, 49, 0.536);
+  cursor: pointer;
+}
+
+/* Optional: Handle when the user hovers over the scrollbar */
+#body::-webkit-scrollbar-thumb:hover,
+#body::-webkit-scrollbar-thumb:focus {
+  background-color: #555;
+  cursor: pointer;
+}
+
+#create-post form button {
+  width: fit-content;
+  padding: 0.75rem 4rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: rgb(49, 49, 49);
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition-property: background-color;
+}
+
+#create-post form button:hover {
+  background-color: gray;
+}
+
+#posted {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+}
+
+#posted img {
+  margin-top: 6rem;
+  width: 3rem;
+  filter: invert(100%);
+}
+#posted h3 {
+  /* margin: auto; */
+}
+
+#posted h3 span {
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+#post {
+  margin: 1rem;
+  background-color: #55555529;
+  border-radius: 0.5rem;
+
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  color: #707070;
+}
+
+#post h3,
+#post h4 {
+  color: #909090;
+}
+
+#post #stats {
+  font-style: italic;
+}
+
+#comments ul {
+  list-style: none;
+  padding: 0rem;
+  height: fit-content;
+  overflow: unset;
+}
+
+#comments ul li {
+  background-color: inherit;
+  cursor: default;
+  padding: 0;
+}
+
+#comments ul li:hover {
+  background-color: inherit;
+}
+
+#comments form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+#comments input {
+  padding: 1rem;
+  background: rgba(49, 49, 49, 0.536);
+  border: none;
+  border-radius: 0.5rem;
+  width: 95%;
+  color: white;
+  font-weight: bold;
+  font-size: medium;
+  outline: none;
+}
+
+#comments button {
+  margin: 0;
+  width: fit-content;
+  padding: 0.75rem 4rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: rgb(49, 49, 49);
+  font-weight: bold;
+  color: white;
+  margin-left: auto;
+}
+
+#comments button:hover {
+  background: rgba(49, 49, 49, 0.421);
+}
+
+#Navigation figure img,
+#signup form button,
+#signup form button img,
+#signup form button h4,
+#signup form img,
+#signup div form button,
+#signup div button img,
+#signup div button h4,
+#signup div img,
+#options button,
+#workplace ul li,
+#comments button,
+#create-post form button,
+#options #create-post-btn {
   transition-duration: var(--def-transition-duration);
   transition-timing-function: ease-in-out;
 }

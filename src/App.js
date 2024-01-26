@@ -1,21 +1,46 @@
 import "./App.css";
+import { useState, useEffect } from "react";
+import Dashboard from "./components/Dashboard.js";
 import HomePage from "./components/HomePage.js";
+import Cookies from "js-cookie";
+import Navigation from "./components/Navigation.js";
+import Signup from "./components/Signup.js";
+import Login from "./components/Login.js";
+import { Route, Routes, redirect, Navigate } from "react-router-dom";
+import { getUser } from "./services/user.js";
+import { useDispatch, useSelector } from "react-redux";
+import { SetUser } from "./reduxStore/reducers/user.js";
 
 function App() {
+  const Dispatch = useDispatch();
+  const User = useSelector((state) => state.user);
+
+  useEffect(() => {
+    const jwtToken = Cookies.get("token");
+    console.log(jwtToken);
+    getUser(jwtToken).then(({ user, message }) => {
+      if (user) {
+        Dispatch(SetUser({ ...user, token: jwtToken }));
+      }
+    });
+  }, []);
+
   return (
     <div className="App">
-      <header>
-        <figure>
-          <img
-            src={process.env.PUBLIC_URL + "postgram_logo.png"}
-            alt="postgram"
-          ></img>
-        </figure>
-      </header>
-      <main>
-        <HomePage />
-      </main>
-      <footer></footer>
+      <Routes>
+        <Route path="/" element={<Navigation />}>
+          <Route index element={<HomePage />} />
+          <Route path="posts/*" element={<Dashboard />}></Route>
+          <Route
+            path="signup/"
+            element={!User ? <Signup /> : <Navigate to="/posts" />}
+          />
+          <Route
+            path="login/"
+            element={!User ? <Login /> : <Navigate to="/posts" />}
+          />
+        </Route>
+      </Routes>
     </div>
   );
 }
