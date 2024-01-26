@@ -15,10 +15,10 @@ const Login = () => {
   const [Field, SetField] = useState({ email: "", otp: "" });
   const [OtpCheck, SetOtpCheck] = useState({ status: false, value: "" });
   const [Verified, SetVerified] = useState(false);
-  //   console.log(Field);
+  //   //console.log(Field);
   const OnFieldChangeHandler = (event) => {
     const { name, value } = event.target;
-    // console.log(name, value);
+    // //console.log(name, value);
 
     SetField({ ...Field, [name]: value });
   };
@@ -40,10 +40,10 @@ const Login = () => {
 
       if (response.status === 200) {
         SetVerified(true);
-        console.log(response.data);
         const token = response.data.token;
         Cookies.set("token", token, { expires: 3, secure: true });
-        dispatch(SetUser(response.data.User));
+        dispatch(SetUser({ ...response.data.User, token: token }));
+        // dispatch(SetUser());
       }
     }
   };

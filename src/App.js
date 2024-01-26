@@ -17,7 +17,7 @@ function App() {
 
   useEffect(() => {
     const jwtToken = Cookies.get("token");
-    console.log(jwtToken);
+    // //console.log(jwtToken);
     getUser(jwtToken).then(({ user, message }) => {
       if (user) {
         Dispatch(SetUser({ ...user, token: jwtToken }));

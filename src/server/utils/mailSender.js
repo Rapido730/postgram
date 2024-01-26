@@ -19,10 +19,10 @@ const mailSender = async (email, title, body) => {
       html: `${body}`,
     });
 
-    console.log("Info is here: ", info);
+    //console.log("Info is here: ", info);
     return info;
   } catch (error) {
-    console.log(error.message);
+    //console.log(error.message);
   }
 };
 

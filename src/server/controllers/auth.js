@@ -24,7 +24,7 @@ exports.signup = async (req, res) => {
   try {
     //get input data
     const { name, email, otp } = req.body;
-    console.log(req.body);
+    // //console.log(req.body);
     // Check if All Details are there or not
     if (!name || !email || !otp) {
       return res.status(403).send({
@@ -44,7 +44,7 @@ exports.signup = async (req, res) => {
 
     // Find the most recent OTP for the email
     const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
-    console.log(response);
+    // //console.log(response);
     if (response.length === 0) {
       // OTP not found for the email
       return res.status(400).json({
@@ -56,17 +56,22 @@ exports.signup = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "The OTP is not valid",
-      }); 
+      });
     }
 
     const User = await user.create({
       name,
       email,
     });
-
-    return res.status(200).json({
+    const payload = {
+      email: User.email,
+      id: User._id,
+    };
+    const { token, options } = createToken(User, payload);
+    return res.cookie("token", token, options).status(200).json({
       success: true,
       User,
+      token,
       message: "user created successfully ✅",
     });
   } catch (error) {
@@ -101,7 +106,7 @@ exports.login = async (req, res) => {
     }
 
     const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
-    console.log(response);
+    // //console.log(response);
     if (response.length === 0) {
       // OTP not found for the email
       return res.status(400).json({
@@ -125,7 +130,7 @@ exports.login = async (req, res) => {
       //if password matched
       //now lets create a JWT token
       const { token, options } = createToken(User, payload);
-      console.log({ token });
+      // //console.log({ token });
       res.cookie("token", token, options).status(200).json({
         success: true,
         User,
@@ -167,9 +172,9 @@ exports.sendotp = async (req, res) => {
       specialChars: false,
     });
     const result = await OTP.findOne({ otp: otp });
-    console.log("Result is Generate OTP Func");
-    console.log("OTP", otp);
-    console.log("Result", result);
+    //console.log("Result is Generate OTP Func");
+    //console.log("OTP", otp);
+    //console.log("Result", result);
     while (result) {
       otp = otpGenerator.generate(6, {
         upperCaseAlphabets: false,
@@ -177,14 +182,14 @@ exports.sendotp = async (req, res) => {
     }
     const otpPayload = { email, otp };
     const otpBody = await OTP.create(otpPayload);
-    console.log("OTP Body", otpBody);
+    //console.log("OTP Body", otpBody);
     res.status(200).json({
       success: true,
       message: `OTP Sent Successfully`,
       otp,
     });
   } catch (error) {
-    console.log(error.message);
+    //console.log(error.message);
     return res.status(500).json({ success: false, error: error.message });
   }
 };

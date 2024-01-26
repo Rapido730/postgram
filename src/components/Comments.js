@@ -18,7 +18,7 @@ const Comments = ({ Post }) => {
 
     SetCommentField((prev) => ({ ...prev, [name]: value }));
   };
-  console.log(Post._id);
+  // //console.log(Post._id);
   const OnCommentSubmitHandler = (event) => {
     event.preventDefault();
     addComment(User.token, Post._id, CommentField.body).then((response) => {

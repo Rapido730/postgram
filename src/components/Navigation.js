@@ -8,9 +8,7 @@ const Navigation = () => {
   const User = useSelector((state) => state.user);
   const Dispatch = useDispatch();
   const navigate = useNavigate();
-  useEffect(() => {
-    console.log({ User });
-  }, [User]);
+
 
   const logoutHandler = (event) => {
     event.preventDefault();

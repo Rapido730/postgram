@@ -11,8 +11,9 @@ export const postSlice = createSlice({
     },
     AddPost: (state, action) => {
       const { payload } = action;
-      state.push(payload);
-      return state;
+      const NewState = state;
+      NewState.push(payload);
+      return NewState;
     },
     DeletePost: (state, action) => {
       const { payload } = action;

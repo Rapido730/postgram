@@ -12,12 +12,12 @@ exports.auth = (req, res, next) => {
         message: "Token Missing",
       });
     }
-    console.log(token)
+    //console.log(token)
     //verify the token
     try {
       const decode = verify(token, process.env.JWT_SECRET);
       req.userEmail = decode.email;
-      console.log(req.userEmail);
+      //console.log(req.userEmail);
     } catch (error) {
       return res.status(401).json({
         success: false,

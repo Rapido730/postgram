@@ -1,9 +1,11 @@
 import { useState, useEffect, Fragment } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "../services/post";
+import { AddPost } from "../reduxStore/reducers/post";
 
 const CreatePost = () => {
   const [FormField, SetFormField] = useState({ title: "", body: "" });
+  const dispatch = useDispatch();
   const [Posted, SetPosted] = useState(false);
   const User = useSelector((state) => state.user);
   const onFormFieldChangeHandler = (event) => {
@@ -14,14 +16,16 @@ const CreatePost = () => {
 
   const onFormSubmitHandler = (event) => {
     event.preventDefault();
-    createPost(User.token, FormField.title, FormField.body).then(
-      ({ post, message }) => {
-        if (post) {
-          SetPosted(true);
+    if (User)
+      createPost(User.token, FormField.title, FormField.body).then(
+        ({ post, message }) => {
+          if (post) {
+            dispatch(AddPost(post));
+            SetPosted(true);
+          }
         }
-      }
-    );
-    console.log(FormField);
+      );
+    // //console.log(FormField);
   };
   return (
     <Fragment>

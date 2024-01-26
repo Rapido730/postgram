@@ -21,10 +21,10 @@ exports.getAllPostList = async (req, res) => {
       message: "user not found",
     });
   }
-  console.log("came");
+  // //console.log("came");
   try {
     const posts = await post.find();
-    console.log({ posts });
+    //console.log({ posts });
     res.status(200).json({
       success: true,
       posts: posts,
@@ -61,7 +61,7 @@ exports.getPost = async (req, res) => {
       path: "comments",
       match: true,
     });
-    console.log({ Post });
+    //console.log({ Post });
     res.status(200).json({
       success: true,
       post: Post,
@@ -93,7 +93,7 @@ exports.getPostList = async (req, res) => {
       message: "user not found",
     });
   }
-  console.log({ User });
+  //console.log({ User });
   try {
     await User.populate({
       path: "posts",
@@ -118,7 +118,7 @@ exports.createPost = async (req, res) => {
     const authorEmail = req.userEmail;
 
     const { title, body } = req.body;
-    console.log({ title, body, authorEmail });
+    //console.log({ title, body, authorEmail });
     if (!title || !body) {
       return res.status(403).send({
         success: false,
@@ -151,7 +151,7 @@ exports.addComment = async (req, res) => {
     const authorEmail = req.userEmail;
 
     const { body, post_id } = req.body;
-    console.log({ body, authorEmail, post_id });
+    //console.log({ body, authorEmail, post_id });
     if (!body | !post_id) {
       return res.status(403).send({
         success: false,
@@ -189,7 +189,7 @@ exports.addReply = async (req, res) => {
     const authorEmail = req.userEmail;
 
     const { body, post_id, comment_id } = req.body;
-    console.log({ body, authorEmail });
+    //console.log({ body, authorEmail });
     if (!body | !post_id | !comment_id) {
       return res.status(403).send({
         success: false,

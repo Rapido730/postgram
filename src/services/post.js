@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const Server_URL = process.env.REACT_APP_SERVER_URL;
-console.log(Server_URL);
+//console.log(Server_URL);
 
 export const createPost = async (token, title, body) => {
   try {
@@ -59,7 +59,7 @@ export const getAllPostList = async (token) => {
     const response = await axios.post(Server_URL + "post/getallpostlist", {
       token,
     });
-    console.log(response)
+    //console.log(response)
     if (response.status === 200) {
       return { posts: response.data.posts, message: "" };
     } else {

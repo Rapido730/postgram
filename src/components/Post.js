@@ -8,7 +8,7 @@ const Post = () => {
   const { post_id } = useParams();
   const [PostData, SetPostData] = useState(null);
   const User = useSelector((state) => state.user);
-  console.log({ post_id });
+  //console.log({ post_id });
 
   useEffect(() => {
     if (User && post_id) {

@@ -15,7 +15,7 @@ const Dashboard = () => {
   const User = useSelector((state) => state.user);
   const navigate = useNavigate();
   useEffect(() => {
-    console.log({ Option });
+    // //console.log({ Option });
     SetOption(param_option);
   }, [param_option]);
 
@@ -25,7 +25,7 @@ const Dashboard = () => {
         if (posts) {
           Dispatch(SetPostList(posts));
         } else {
-          console.log({ message });
+          //console.log({ message });
         }
       });
   }, [User]);

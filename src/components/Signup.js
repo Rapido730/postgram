@@ -2,7 +2,10 @@ import { useState } from "react";
 import { Fragment } from "react";
 
 import axios from "axios";
+import { SetUser } from "../reduxStore/reducers/user";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import Cookies from "js-cookie";
 
 const Signup = () => {
   const Server_URL = process.env.REACT_APP_SERVER_URL;
@@ -10,10 +13,11 @@ const Signup = () => {
   const [OtpCheck, SetOtpCheck] = useState({ status: false, value: "" });
   const [Verified, SetVerified] = useState(false);
   const navigate = useNavigate();
-  //   console.log(Field);
+  const dispatch = useDispatch();
+  //   //console.log(Field);
   const OnFieldChangeHandler = (event) => {
     const { name, value } = event.target;
-    // console.log(name, value);
+    // //console.log(name, value);
 
     SetField({ ...Field, [name]: value });
   };
@@ -34,6 +38,9 @@ const Signup = () => {
       });
 
       if (response.status === 200) {
+        const token = response.data.token;
+        Cookies.set("token", token, { expires: 3, secure: true });
+        dispatch(SetUser({ ...response.data.User, token }));
         SetVerified(true);
       }
     }

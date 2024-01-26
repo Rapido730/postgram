@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const Server_URL = process.env.REACT_APP_SERVER_URL;
-console.log(Server_URL);
+//console.log(Server_URL);
 
 export const getUser = async (token) => {
   try {
