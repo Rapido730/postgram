@@ -1,3 +1,7 @@
+html {
+  font-size: 16px; /* Set your desired root font size here */
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
