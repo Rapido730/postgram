@@ -2,6 +2,7 @@ const comment = require("../models/comment");
 const post = require("../models/post");
 const user = require("../models/user");
 const reply = require("../models/replies");
+const mailSender = require("../utils/mailSender");
 
 exports.getAllPostList = async (req, res) => {
   const authorEmail = req.userEmail;
@@ -132,6 +133,12 @@ exports.createPost = async (req, res) => {
       author_id: authorEmail,
     });
 
+    await mailSender(
+      authorEmail,
+      title + " is posted",
+      "Congrats your post is live now!!"
+    );
+
     return res.status(200).json({
       success: true,
       Post,
@@ -170,6 +177,11 @@ exports.addComment = async (req, res) => {
     Post["comment_count"] = Post["comment_count"] + 1;
 
     await Post.save();
+    await mailSender(
+      authorEmail,
+      "Someone comment on you post : " + Post.title,
+      `${authorEmail} commented on your post ${Post.title}.`
+    );
     return res.status(200).json({
       success: true,
       Comment,

@@ -1,13 +1,14 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { addComment } from "../services/post";
-import { useSelector } from "react-redux";
-import post from "../reduxStore/reducers/post";
+import { useDispatch, useSelector } from "react-redux";
+import post, { IncrementCommentCount } from "../reduxStore/reducers/post";
 
 const Comments = ({ Post }) => {
   const [CommentField, SetCommentField] = useState({ IsOpen: false, body: "" });
   const [ReplyField, SetReplyField] = useState({ IsOpen: false, body: "" });
   const User = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     SetCommentField((prev) => ({ ...prev, IsOpen: false }));
@@ -22,7 +23,8 @@ const Comments = ({ Post }) => {
   const OnCommentSubmitHandler = (event) => {
     event.preventDefault();
     addComment(User.token, Post._id, CommentField.body).then((response) => {
-      SetCommentField((prev) => ({ ...prev, IsOpen: false }));
+      SetCommentField((prev) => ({ ...prev, IsOpen: false, body: "" }));
+      dispatch(IncrementCommentCount(Post));
     });
   };
 

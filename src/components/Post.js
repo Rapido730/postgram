@@ -8,17 +8,15 @@ const Post = () => {
   const { post_id } = useParams();
   const [PostData, SetPostData] = useState(null);
   const User = useSelector((state) => state.user);
+  const PostList = useSelector((state) => state.post);
   //console.log({ post_id });
 
   useEffect(() => {
-    if (User && post_id) {
-      getPost(User.token, post_id).then(({ post, message }) => {
-        if (post) {
-          SetPostData(post);
-        }
-      });
+    if (User && post_id&&PostList) {
+      const post = PostList.filter((post) => post._id === post_id)[0];
+      SetPostData(post);
     }
-  }, [User, post_id]);
+  }, [User, post_id, PostList]);
 
   return (
     <div>

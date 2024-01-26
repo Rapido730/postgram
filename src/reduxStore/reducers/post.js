@@ -15,6 +15,15 @@ export const postSlice = createSlice({
       NewState.push(payload);
       return NewState;
     },
+    IncrementCommentCount: (state, action) => {
+      const { payload } = action;
+      const NewState = state.map((post) =>
+        post._id === payload._id
+          ? { ...post, comment_count: post["comment_count"] + 1 }
+          : post
+      );
+      return NewState;
+    },
     DeletePost: (state, action) => {
       const { payload } = action;
       const NewState = state.filter((post) => post._id !== payload._id);
@@ -24,5 +33,5 @@ export const postSlice = createSlice({
   },
 });
 
-export const { SetPostList, AddPost, DeletePost } = postSlice.actions;
+export const { SetPostList, AddPost, DeletePost,IncrementCommentCount } = postSlice.actions;
 export default postSlice.reducer;

@@ -3,7 +3,7 @@
 }
 
 .App {
-  position: absolute;
+  /* position: absolute; */
   min-height: 80%;
   min-width: 80%;
   height: fit-content;
