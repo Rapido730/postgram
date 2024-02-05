@@ -10,7 +10,16 @@ import Cookies from "js-cookie";
 const Signup = () => {
   const Server_URL = process.env.REACT_APP_SERVER_URL;
   const [Field, SetField] = useState({ name: "", email: "", otp: "" });
-  const [OtpCheck, SetOtpCheck] = useState({ status: false, value: "" });
+  const [Notification, SetNotification] = useState({
+    IsOpen: false,
+    body: "",
+  });
+  const [OtpCheck, SetOtpCheck] = useState({
+    status: false,
+    value: "",
+    IsProcessing: false,
+    UserExist: false,
+  });
   const [Verified, SetVerified] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -24,24 +33,74 @@ const Signup = () => {
 
   const OnFormSubmitHandler = async (event) => {
     event.preventDefault();
+    SetOtpCheck((prev) => ({ ...prev, IsProcessing: true }));
     if (OtpCheck.status === false) {
-      const response = await axios.post(Server_URL + "user/sendotp", {
-        email: Field.email,
-      });
+      try {
+        const response = await axios.post(Server_URL + "user/sendotp/signup", {
+          email: Field.email,
+        });
 
-      if (response.status === 200) {
-        SetOtpCheck({ status: true, value: response.data.otp });
+        if (response.status === 200) {
+          SetOtpCheck({
+            status: true,
+            value: response.data.otp,
+            IsProcessing: false,
+          });
+        }
+      } catch ({ response }) {
+        if (response.status === 401) {
+          SetNotification((prev) => ({
+            ...prev,
+            IsOpen: true,
+            body: response.data.message,
+          }));
+          SetOtpCheck((prev) => ({
+            ...prev,
+            UserExist: true,
+            IsProcessing: false,
+          }));
+
+          setTimeout(() => {
+            SetNotification((prev) => ({
+              ...prev,
+              IsOpen: false,
+              body: "",
+            }));
+          }, 3000);
+        }
       }
     } else {
-      const response = await axios.post(Server_URL + "user/signup", {
-        ...Field,
-      });
+      if (Field.otp !== OtpCheck.value) {
+        SetNotification((prev) => ({
+          ...prev,
+          IsOpen: true,
+          body: "Incorrect Otp.\nTry Again...",
+        }));
 
-      if (response.status === 200) {
-        const token = response.data.token;
-        Cookies.set("token", token, { expires: 3, secure: true });
-        dispatch(SetUser({ ...response.data.User, token }));
-        SetVerified(true);
+        SetOtpCheck((prev) => ({
+          ...prev,
+          IsProcessing: false,
+        }));
+
+        setTimeout(() => {
+          SetNotification((prev) => ({
+            ...prev,
+            IsOpen: false,
+            body: "",
+          }));
+        }, 3000);
+      } else {
+        const response = await axios.post(Server_URL + "user/signup", {
+          ...Field,
+        });
+
+        if (response.status === 200) {
+          const token = response.data.token;
+          Cookies.set("token", token, { expires: 3, secure: true });
+          dispatch(SetUser({ ...response.data.User, token }));
+          SetVerified(true);
+        } else if (response.status === 400) {
+        }
       }
     }
   };
@@ -81,25 +140,40 @@ const Signup = () => {
                 required
                 placeholder="Enter Your Name"
                 value={Field.name}
+                disabled={OtpCheck.IsProcessing}
                 onChange={OnFieldChangeHandler}
               ></input>
               <input
                 name="email"
                 type="email"
                 required
+                disabled={OtpCheck.IsProcessing}
                 placeholder="Enter Email ID"
                 value={Field.email}
                 onChange={OnFieldChangeHandler}
               ></input>
             </Fragment>
           )}
-          <button type="submit">
-            <h4>Continue</h4>
+          {Notification.IsOpen && <p id="Notification">{Notification.body}</p>}
+          <button disabled={OtpCheck.IsProcessing} type="submit">
+            <h4>{OtpCheck.IsProcessing ? "Wait..." : "Continue"}</h4>
             <img
               src={process.env.PUBLIC_URL + "arrow-right-solid.svg"}
               alt=""
             ></img>
           </button>
+
+          {OtpCheck.UserExist && (
+            <p
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              {" "}
+              Login to your account{" "}
+            </p>
+          )}
         </form>
       ) : (
         <div>

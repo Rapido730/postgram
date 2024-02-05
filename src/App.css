@@ -21,14 +21,28 @@
   font-weight: 800;
   cursor: pointer;
 }
-#Navigation figure img {
+#Navigation figure div {
   cursor: pointer;
-  width: 10rem;
+  width: fit-content;
+  height: fit-content;
   filter: brightness(1.5);
   transform: scale(1);
   transition-property: filter, transform;
 }
-#Navigation figure img:hover {
+
+#Navigation div::before {
+  content: "";
+  background-image: url("../public/postgram_logo.png");
+  position: relative;
+  width: 12rem; /* Set the width as per your requirement */
+  height: 5rem;
+  background-size: cover;
+  display: block;
+  top: 15%;
+  right: 5%;
+}
+
+#Navigation figure div:hover {
   filter: brightness(10);
   transform: scale(1.05);
 }
@@ -585,7 +599,36 @@
   background: rgba(49, 49, 49, 0.421);
 }
 
-#Navigation figure img,
+#comment {
+  display: flex;
+  flex-direction: column;
+}
+
+#comment button {
+  margin-left: auto;
+}
+
+#comment #reply_button {
+  width: 80%;
+  background-color: unset;
+  color: #706f6f;
+  transition-property: color;
+}
+
+#comment #reply_button:hover {
+  color: #8d8c8c;
+}
+
+#reply_list {
+  width: 100%;
+  padding-left: 6rem;
+}
+
+#Notification {
+  color: red;
+}
+
+#Navigation figure div,
 #signup form button,
 #signup form button img,
 #signup form button h4,
@@ -598,7 +641,8 @@
 #workplace ul li,
 #comments button,
 #create-post form button,
-#options #create-post-btn {
+#options #create-post-btn,
+#comment #reply_button {
   transition-duration: var(--def-transition-duration);
   transition-timing-function: ease-in-out;
 }

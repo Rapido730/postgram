@@ -6,18 +6,16 @@ import PostList from "./PostList";
 import { SetPostList } from "../reduxStore/reducers/post";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Post from "./Post";
+import CommentedPostList from "./CommentedPost";
+import RepliedPostList from "./RepliedPost";
 
 const Dashboard = () => {
   const Dispatch = useDispatch();
   let params = new URLSearchParams(document.location.search);
   const param_option = params.get("option");
-  const [Option, SetOption] = useState(param_option || "0");
+  const [Option, SetOption] = useState("0");
   const User = useSelector((state) => state.user);
   const navigate = useNavigate();
-  useEffect(() => {
-    // //console.log({ Option });
-    SetOption(param_option);
-  }, [param_option]);
 
   useEffect(() => {
     if (User)
@@ -30,8 +28,25 @@ const Dashboard = () => {
       });
   }, [User]);
 
+  useEffect(() => {
+    SetOption(param_option);
+  }, [param_option]);
+
   const optionChangeHandler = (event, option_choice) => {
     navigate(`/posts?option=${option_choice}`);
+  };
+
+  const TabElement = (Option) => {
+    switch (Option) {
+      case "1":
+        return <CommentedPostList />;
+      case "2":
+        return <RepliedPostList />;
+      case "3":
+        return <CreatePost />;
+      default:
+        return <PostList />;
+    }
   };
 
   return (
@@ -44,12 +59,24 @@ const Dashboard = () => {
         >
           {"All Post"}
         </button>
-        <button>{"Commented Post"}</button>
-        <button>{"Replied Post"}</button>
+        <button
+          onClick={(event) => {
+            optionChangeHandler(event, 1);
+          }}
+        >
+          {"Commented Post"}
+        </button>
+        <button
+          onClick={(event) => {
+            optionChangeHandler(event, 2);
+          }}
+        >
+          {"Replied Post"}
+        </button>
         <button
           id="create-post-btn"
           onClick={(event) => {
-            optionChangeHandler(event, 1);
+            optionChangeHandler(event, 3);
           }}
         >
           {"Create Post"}
@@ -57,10 +84,7 @@ const Dashboard = () => {
       </div>
       <div id="workplace">
         <Routes>
-          <Route
-            index
-            element={Option == 0 ? <PostList /> : <CreatePost />}
-          ></Route>
+          <Route index element={TabElement(Option)}></Route>
           <Route path=":post_id" element={<Post />}></Route>
         </Routes>
       </div>

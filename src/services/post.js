@@ -106,3 +106,74 @@ export const addReply = async (token, body, post_id, comment_id) => {
     return { Reply: null, message: error.message };
   }
 };
+
+export const getCommentList = async (token, post_id) => {
+  try {
+    // console.log({ token });
+    const response = await axios.post(Server_URL + "post/getpostcomment", {
+      token,
+      post_id,
+    });
+    // console.log(response)
+    if (response.status === 200) {
+      return { comments: response.data.comment_list, message: "" };
+    } else {
+      return { comments: null, message: response.data.message };
+    }
+  } catch (error) {
+    return { omments: null, message: error.message };
+  }
+};
+
+export const getReplyList = async (token, comment_id) => {
+  try {
+    // console.log({ token });
+    const response = await axios.post(Server_URL + "post/getcommentreplies", {
+      token,
+      comment_id,
+    });
+    // console.log(response)
+    if (response.status === 200) {
+      return { replies: response.data.reply_list, message: "" };
+    } else {
+      return { replies: null, message: response.data.message };
+    }
+  } catch (error) {
+    return { replies: null, message: error.message };
+  }
+};
+
+export const getCommentedPostList = async (token) => {
+  try {
+    const response = await axios.post(
+      Server_URL + "post/getcommentedpostlist",
+      {
+        token,
+      }
+    );
+
+    if (response.status === 200) {
+      return { posts: response.data.posts, message: "" };
+    } else {
+      return { posts: null, message: response.data.message };
+    }
+  } catch (error) {
+    return { posts: null, message: error.message };
+  }
+};
+
+export const getRepliedPostList = async (token) => {
+  try {
+    const response = await axios.post(Server_URL + "post/getrepliedpostlist", {
+      token,
+    });
+
+    if (response.status === 200) {
+      return { posts: response.data.posts, message: "" };
+    } else {
+      return { posts: null, message: response.data.message };
+    }
+  } catch (error) {
+    return { posts: null, message: error.message };
+  }
+};

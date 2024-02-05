@@ -6,7 +6,7 @@ import { AddPost } from "../reduxStore/reducers/post";
 const CreatePost = () => {
   const [FormField, SetFormField] = useState({ title: "", body: "" });
   const dispatch = useDispatch();
-  const [Posted, SetPosted] = useState(false);
+  const [Posted, SetPosted] = useState({ Status: false, IsProcessing: false });
   const User = useSelector((state) => state.user);
   const onFormFieldChangeHandler = (event) => {
     const { name, value } = event.target;
@@ -16,20 +16,32 @@ const CreatePost = () => {
 
   const onFormSubmitHandler = (event) => {
     event.preventDefault();
+    SetPosted((prev) => ({ ...prev, IsProcessing: true }));
     if (User)
       createPost(User.token, FormField.title, FormField.body).then(
         ({ post, message }) => {
           if (post) {
             dispatch(AddPost(post));
-            SetPosted(true);
+            SetPosted((prev) => ({
+              ...prev,
+              Status: true,
+              IsProcessing: false,
+            }));
+
+            setTimeout(() => {
+              SetPosted((prev) => ({
+                ...prev,
+                Status: false,
+              }));
+              SetFormField((prev) => ({ ...prev, title: "", body: "" }));
+            }, 3000);
           }
         }
       );
-    // //console.log(FormField);
   };
   return (
     <Fragment>
-      {!Posted ? (
+      {!Posted.Status ? (
         <div id="create-post">
           <h3>{"Create Post"}</h3>
           <form onSubmit={onFormSubmitHandler}>
@@ -37,16 +49,22 @@ const CreatePost = () => {
               name="title"
               placeholder="Post Title..."
               value={FormField.title}
+              disabled={Posted.IsProcessing}
               onChange={onFormFieldChangeHandler}
+              required
             ></input>
             <textarea
               id={"body"}
               name="body"
               placeholder="Describe your post..."
               value={FormField.body}
+              disabled={Posted.IsProcessing}
               onChange={onFormFieldChangeHandler}
+              required
             ></textarea>
-            <button type="submit">{"Post Submit"}</button>
+            <button type="submit" disabled={Posted.IsProcessing}>
+              {Posted.IsProcessing ? "Posting..." : "Post Submit"}
+            </button>
           </form>
         </div>
       ) : (

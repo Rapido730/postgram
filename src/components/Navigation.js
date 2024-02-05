@@ -9,7 +9,6 @@ const Navigation = () => {
   const Dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   const logoutHandler = (event) => {
     event.preventDefault();
     Cookies.remove("token");
@@ -21,10 +20,7 @@ const Navigation = () => {
     <Fragment>
       <header id="Navigation">
         <figure>
-          <img
-            src={process.env.PUBLIC_URL + "postgram_logo.png"}
-            alt="postgram"
-          ></img>
+          <div></div>
         </figure>
         {User && (
           <h3 onClick={logoutHandler}>

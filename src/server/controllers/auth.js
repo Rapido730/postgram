@@ -150,21 +150,33 @@ exports.login = async (req, res) => {
 // Send OTP For Email Verification
 exports.sendotp = async (req, res) => {
   try {
+    const purpose = req.params.purpose;
     const { email } = req.body;
 
     // Check if user is already present
     // Find user with provided email
-    // const checkUserPresent = await user.findOne({ email });
+    const checkUserPresent = await user.findOne({ email });
     // to be used in case of signup
 
     // If user found with provided email
-    // if (checkUserPresent) {
-    //   // Return 401 Unauthorized status code with error message
-    //   return res.status(401).json({
-    //     success: false,
-    //     message: `User is Already Registered`,
-    //   });
-    // }
+
+    if (purpose === "signup") {
+      if (checkUserPresent) {
+        return res.status(401).json({
+          success: false,
+          message: `User is Already Registered`,
+        });
+      }
+    }
+
+    if (purpose === "login") {
+      if (!checkUserPresent) {
+        return res.status(401).json({
+          success: false,
+          message: `You have to Signup First`,
+        });
+      }
+    }
 
     var otp = otpGenerator.generate(6, {
       upperCaseAlphabets: false,
@@ -173,7 +185,7 @@ exports.sendotp = async (req, res) => {
     });
     const result = await OTP.findOne({ otp: otp });
     //console.log("Result is Generate OTP Func");
-    //console.log("OTP", otp);
+    console.log("OTP", otp);
     //console.log("Result", result);
     while (result) {
       otp = otpGenerator.generate(6, {

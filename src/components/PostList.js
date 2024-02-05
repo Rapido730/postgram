@@ -1,12 +1,26 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getAllPostList } from "../services/post";
 import { useNavigate, Link } from "react-router-dom";
+import { SetPostList } from "../reduxStore/reducers/post";
 
 const PostList = () => {
-  const navigate = useNavigate();
+  const Dispatch = useDispatch();
   const [PostsData, SetPostData] = useState([]);
+  const User = useSelector((state) => state.user);
 
-  const PostList = useSelector((state) => state.post);
+  const PostList = useSelector((state) => state.post.AllPost);
+
+  useEffect(() => {
+    if (User)
+      getAllPostList(User.token).then(({ posts, message }) => {
+        if (posts) {
+          Dispatch(SetPostList(posts));
+        } else {
+          //console.log({ message });
+        }
+      });
+  }, [User]);
 
   useEffect(() => {
     SetPostData(PostList);
